@@ -2,7 +2,24 @@
   <div id="app">
     <img alt="MediKeeper logo" src="./assets/logo.png">
     <SearchBar @search-name="handleSearch" />
-    <Items v-bind:items='items' @del-item="handleDelete" />
+    <Items v-bind:items='items' @del-item="handleDelete" @edit-item="$refs.editModal.openModal()" />
+
+    <modal ref="editModal">
+      <template v-slot:header>
+        <h1>Modal title</h1>
+      </template>
+
+      <template v-slot:body>
+      </template>
+
+      <template v-slot:footer>
+        <div>
+          <button @click="$refs.editModal.closeModal()">Cancel</button>
+          <button @click="$refs.editModal.closeModal()">Save</button>
+        </div>
+      </template>
+    </modal>
+
     <h2 v-show="maxPriceItem.id">
       The most you've paid for
       {{ maxPriceItem.itemname }}
@@ -15,6 +32,7 @@
 
 <script>
 import axios from 'axios';
+import Modal from './components/Modal.vue';
 import Items from './components/Items.vue';
 import SearchBar from './components/SearchBar.vue';
 
@@ -23,6 +41,7 @@ const API_URL = 'http://localhost:6060';
 export default {
   name: 'App',
   components: {
+    Modal,
     Items,
     SearchBar,
   },
@@ -78,6 +97,10 @@ export default {
 
   button {
     cursor: pointer;
+  }
+
+  .overflow-hidden {
+    overflow: hidden;
   }
 </style>
 
