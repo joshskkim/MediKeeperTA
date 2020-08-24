@@ -1,6 +1,6 @@
 /*
   Reads all items with matching name
 */
-SELECT cost
+SELECT *
 FROM iteminfo
 WHERE itemName = $1
