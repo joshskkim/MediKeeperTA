@@ -21,14 +21,18 @@
       </template>
 
       <template v-slot:footer>
-        <div>
-          <button @click="$refs.editModal.closeModal()">Cancel</button>
-          <button
-            @click="handlePatch"
-          >
-            Save
-          </button>
-        </div>
+        <button
+          @click="$refs.editModal.closeModal()"
+          class="cancelEdit"
+        >
+          Cancel
+        </button>
+        <button
+          @click="handlePatch"
+          class="saveEdit"
+        >
+          Save
+        </button>
       </template>
     </modal>
 
@@ -164,5 +168,10 @@ export default {
     color: white;
     border: 1px solid grey;
     border-left: none;
+  }
+
+  button .cancelEdit {
+    margin-right: 15px;
+    padding-right: 40px;
   }
 </style>

@@ -69,7 +69,7 @@ export default {
   .modal .dialog {
     background-color: #ffffff;
     width: 80%;
-    margin: 50px auto;
+    margin: 17% auto;
     display: flex;
     flex-direction: column;
     border-radius: 5px;
@@ -80,13 +80,13 @@ export default {
   }
 
   .modal .close {
-    width: 30px;
-    height: 30px;
+    width: 25px;
+    height: 25px;
     position: relative;
   }
 
   .modal .header {
-    padding: 20px 20px 10px;
+    padding: 20px;
     position: relative;
     display: flex;
     align-items: flex-start;
@@ -94,17 +94,19 @@ export default {
   }
 
   .modal .body {
-    padding: 10px 20px 10px;
+    padding: 10px;
     position: relative;
     display: flex;
     overflow: auto;
-    align-items: stretch;
+    align-items: center;
+    justify-content: space-evenly;
   }
 
   .modal .footer {
     padding: 10px 20px 20px;
     position: relative;
     display: flex;
+    justify-content: flex-end;
   }
 
   .fade-enter-active, .fade-leave-active {
