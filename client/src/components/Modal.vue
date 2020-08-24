@@ -25,7 +25,7 @@
 
 <script>
 export default {
-  name: 'EditModal',
+  name: 'Modal',
   data() {
     return {
       show: false,
