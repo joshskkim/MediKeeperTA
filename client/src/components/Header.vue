@@ -21,5 +21,16 @@ export default {
 </script>
 
 <style>
-
+  table th {
+    text-transform: uppercase;
+    text-align: left;
+    background: #44475C;
+    color: #FFF;
+    cursor: pointer;
+    padding: 8px;
+    min-width: 30px;
+  }
+  table th:hover {
+    background: #717699;
+  }
 </style>

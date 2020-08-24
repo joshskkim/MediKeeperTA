@@ -26,5 +26,10 @@ export default {
 </script>
 
 <style>
-
+  table {
+    width: 750px;
+    border-collapse: collapse;
+    border: 3px solid #44475C;
+    margin: 10px 10px 0 10px;
+  }
 </style>
