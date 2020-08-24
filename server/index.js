@@ -24,15 +24,9 @@ const GET = (url, handler) => {
   app.get(url, async (req, res) => {
     try {
       const data = await handler(req);
-      res.status(200).json({
-        success: true,
-        data,
-      });
+      res.status(200).json(data);
     } catch (err) {
-      res.status(400).json({
-        success: false,
-        error: err.message || err,
-      });
+      res.status(400).json(err.message || err);
     }
   });
 };
@@ -42,15 +36,9 @@ const POST = (url, handler) => {
   app.post(url, async (req, res) => {
     try {
       const data = await handler(req);
-      res.status(201).json({
-        success: true,
-        data,
-      });
+      res.status(201).json(data);
     } catch (err) {
-      res.status(400).json({
-        success: false,
-        error: err.message || err,
-      });
+      res.status(400).json(err.message || err);
     }
   });
 };
@@ -60,15 +48,9 @@ const PATCH = (url, handler) => {
   app.patch(url, async (req, res) => {
     try {
       const data = await handler(req);
-      res.status(200).json({
-        success: true,
-        data,
-      });
+      res.status(200).json(data);
     } catch (err) {
-      res.status(400).json({
-        success: false,
-        error: err.message || err,
-      });
+      res.status(400).json(err.message || err);
     }
   });
 };
@@ -78,15 +60,9 @@ const DELETE = (url, handler) => {
   app.delete(url, async (req, res) => {
     try {
       const data = await handler(req);
-      res.status(200).json({
-        success: true,
-        data,
-      });
+      res.status(200).json(data);
     } catch (err) {
-      res.status(400).json({
-        success: false,
-        error: err.message || err,
-      });
+      res.status(400).json(err.message || err);
     }
   });
 };
