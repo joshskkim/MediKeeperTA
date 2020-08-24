@@ -9,7 +9,7 @@
       </thead>
       <tbody>
         <tr v-bind:key="item.id" v-for="item in items">
-          <SingleItem v-bind:item="item" />
+          <SingleItem v-bind:item="item" v-on:del-item="$emit('del-item', item.id)" />
         </tr>
       </tbody>
     </table>

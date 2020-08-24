@@ -2,7 +2,7 @@
   <div id="app">
     <img alt="MediKeeper logo" src="./assets/logo.png">
     <SearchBar @search-name="handleSearch" />
-    <Items v-bind:items='items' />
+    <Items v-bind:items='items' @del-item="handleDelete" />
     <h2 v-show="maxPriceItem.id">
       The most you've paid for
       {{ maxPriceItem.itemname }}
@@ -50,6 +50,14 @@ export default {
       this.allItems = this.items;
       this.items = list.data;
       this.maxPriceItem = max.data;
+    },
+    handleDelete(value) {
+      axios.delete(`${API_URL}/api/items/${value}`);
+      const index = this.items.map((item) => item.id).indexOf(value);
+      this.items.splice(index, 1);
+      if (this.allItems[0]) {
+        this.allItems.splice(index, 1);
+      }
     },
     handleUnfilter() {
       this.items = this.allItems;

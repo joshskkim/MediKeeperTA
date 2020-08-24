@@ -11,19 +11,18 @@
     </td>
     <td class="float-container">
       <div class="float-child">{{ item.cost }}</div>
-      <Buttons class="float-child" v-show="hover" />
+      <div class="float-child" v-show="hover">
+        <button></button>
+        <button @click.prevent="$emit('del-item', item.id)" class="del">X</button>
+      </div>
     </td>
   </div>
 </template>
 
 <script>
-import Buttons from './Buttons.vue';
 
 export default {
   name: 'SingleItem',
-  components: {
-    Buttons,
-  },
   props: ['item'],
   data() {
     return {
