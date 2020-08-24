@@ -75,16 +75,16 @@ const DELETE = (url, handler) => {
 GET('/api/items', () => ItemController.getItems());
 
 // GET a list of max prices of items grouped by item name
-GET('/api/items/list/:name', (req) => ItemController.getMaxPrices(req.params.name));
+GET('/api/items/list/:iname', (req) => ItemController.getMaxPrices(req.params.iname));
 
 // GET max price of an item
-GET('/api/items/:name', (req) => ItemController.getMaxPrice(req.params.name));
+GET('/api/items/:iname', (req) => ItemController.getMaxPrice(req.params.iname));
 
 // CREATES a new item and UPDATES on ID conflict
-POST('/api/items', (req) => ItemController.addItem(req.body.id, req.body.name, req.body.cost));
+POST('/api/items', (req) => ItemController.addItem(req.body.id, req.body.iname, req.body.cost));
 
 // UPDATES an item name
-PATCH('/api/items/name', (req) => ItemController.patchItemName(req.body.id, req.body.name));
+PATCH('/api/items/name', (req) => ItemController.patchItemName(req.body.id, req.body.iname));
 
 // UPDATES an item cost
 PATCH('/api/items/cost', (req) => ItemController.patchItemCost(req.body.id, req.body.cost));

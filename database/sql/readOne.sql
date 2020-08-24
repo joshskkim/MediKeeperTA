@@ -3,6 +3,6 @@
 */
 SELECT *
 FROM iteminfo
-WHERE itemName = $1
+WHERE iname = $1
 ORDER BY cost DESC
 LIMIT 1

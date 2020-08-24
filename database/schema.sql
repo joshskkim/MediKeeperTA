@@ -5,7 +5,7 @@ CREATE DATABASE items;
 
 CREATE TABLE iteminfo (
   id SERIAL NOT NULL PRIMARY KEY,
-  itemName VARCHAR(150) NOT NULL,
+  iname VARCHAR(150) NOT NULL,
   cost INT NOT NULL
 );
 

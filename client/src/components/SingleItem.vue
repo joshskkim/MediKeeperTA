@@ -7,7 +7,7 @@
       {{ item.id }}
     </td>
     <td>
-      {{ item.itemname }}
+      {{ item.iname }}
     </td>
     <td>
       <div class="flex-container">

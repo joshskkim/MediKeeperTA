@@ -3,4 +3,4 @@
 */
 SELECT *
 FROM iteminfo
-WHERE itemName = $1
+WHERE iname = $1

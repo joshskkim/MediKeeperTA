@@ -10,14 +10,14 @@
 
     <modal ref="editModal">
       <template v-slot:header>
-        <h1>Edit {{ comparedItem.itemname }}</h1>
+        <h1>Edit {{ originalItem.iname }}</h1>
       </template>
 
       <template v-slot:body>
-        <label for="namechange">Change {{ comparedItem.itemname }}'s name:</label>
-        <input type="text" v-model="editingItem.itemname" id="namechange">
-        <label for="costchange">Change {{ comparedItem.itemname }}'s cost:</label>
-        <input type="number" v-model="editingItem.cost" id="costchange">
+        <label for="namechange">Change {{ originalItem.iname }}'s name:</label>
+        <input type="text" v-model.lazy="editedItem.iname" id="namechange">
+        <label for="costchange">Change {{ originalItem.iname }}'s cost:</label>
+        <input type="number" v-model="editedItem.cost" id="costchange">
       </template>
 
       <template v-slot:footer>
@@ -35,34 +35,33 @@
     </modal>
     <h2 v-show="maxPriceItem.id">
       The most you've paid for
-      {{ maxPriceItem.itemname }}
+      {{ maxPriceItem.iname }}
       is
       {{ maxPriceItem.cost }}
     </h2>
     <button v-show="maxPriceItem.id" @click="handleUnfilter">See all items</button>
-    <button
-      v-show="!creatingItem"
-      @click="creatingItem = true"
-      id="createButton"
-    >
-      Create A New Item
-    </button>
-    <form v-show="creatingItem">
-      <label for="nameinput">Input name:</label>
-      <input type="text" v-model="newItem.name" id="nameinput" required>
-      <label for="costinput">Input cost:</label>
-      <input type="number" v-model="newItem.cost" id="costinput" required>
+    <div>
       <button
-        @click="creatingItem = false"
+        v-show="!creatingItem"
+        @click="creatingItem = true"
+        id="createButton"
       >
-        Cancel
+        Create A New Item
       </button>
-      <button
-        @click="handleAdd"
-      >
-        Save
-      </button>
-    </form>
+      <form v-show="creatingItem" @submit.prevent="handleAdd">
+        <label for="nameinput">Input name:</label>
+        <input type="text" v-model="newItem.iname" id="nameinput" name="name" required>
+        <label for="costinput">Input cost:</label>
+        <input type="number" v-model="newItem.cost" id="costinput" name="cost" required>
+        <button
+          @click="creatingItem = false"
+          type="button"
+        >
+          Cancel
+        </button>
+        <input type="submit" value="Save">
+      </form>
+    </div>
   </div>
 </template>
 
@@ -88,8 +87,8 @@ export default {
       items: [],
       allItems: [],
       maxPriceItem: {},
-      editingItem: {},
-      comparedItem: {},
+      editedItem: {},
+      originalItem: {},
       newItem: {},
       creatingItem: false,
     };
@@ -102,10 +101,10 @@ export default {
       .catch((err) => console.error(err));
   },
   methods: {
-    async handleSearch(value) {
+    async handleSearch(name) {
       const [list, max] = await Promise.all([
-        axios.get(`${API_URL}/api/items/list/${value}`),
-        axios.get(`${API_URL}/api/items/${value}`),
+        axios.get(`${API_URL}/api/items/list/${name}`),
+        axios.get(`${API_URL}/api/items/${name}`),
       ]);
 
       this.allItems = this.items;
@@ -115,6 +114,7 @@ export default {
     handleAdd() {
       this.creatingItem = false;
       this.newItem.id = this.items[this.items.length - 1].id + 1;
+      this.items.push(this.newItem);
       axios.post(`${API_URL}/api/items`, this.newItem);
       this.newItem = {};
     },
@@ -128,40 +128,39 @@ export default {
     },
     handleEdit(item) {
       this.$refs.editModal.openModal();
-      this.editingItem = item;
-      this.comparedItem = item;
+      this.originalItem = item;
     },
     handlePatch() {
       this.$refs.editModal.closeModal();
       let namechanged = false;
       let costchanged = false;
 
-      if (this.comparedItem.itemname !== this.editingItem.itemname) {
+      if (this.editedItem.iname.length) {
         namechanged = true;
       }
 
-      if (this.comparedItem.cost !== this.comparedItem.cost) {
+      if (this.editedItem.cost) {
         costchanged = true;
       }
 
       if (namechanged && costchanged) {
         axios.post(`${API_URL}/api/items`, {
-          id: this.editingItem.id,
-          name: this.editingItem.itemname,
-          cost: this.editingItem.cost,
+          id: this.originalItem.id,
+          iname: this.editedItem.iname,
+          cost: this.editedItem.cost,
         });
       } else if (namechanged) {
         axios.patch(`${API_URL}/api/items/name`, {
-          id: this.editingItem.id,
-          name: this.editingItem.itemname,
+          id: this.originalItem.id,
+          iname: this.editedItem.iname,
         });
       } else if (costchanged) {
         axios.patch(`${API_URL}/api/items/cost`, {
-          id: this.editingItem.id,
-          cost: this.editingItem.cost,
+          id: this.originalItem.id,
+          cost: this.editedItem.cost,
         });
       } else {
-        console.log(`You did not edit ${this.editingItem.itemname}`);
+        console.log(`You did not edit ${this.editingItem.iname}`);
       }
     },
     handleUnfilter() {
