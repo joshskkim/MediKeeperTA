@@ -1,7 +1,7 @@
 <template>
   <form id="search-bar" @submit.prevent="searchName">
     <label for="search">Search:</label>
-    <input type="text" v-model="name" name="search">
+    <input type="text" v-model="name" id="search">
     <input type="submit" value="SUBMIT" class="btn">
   </form>
 </template>

@@ -15,9 +15,9 @@
 
       <template v-slot:body>
         <label for="namechange">Change {{ comparedItem.itemname }}'s name:</label>
-        <input type="text" v-model="editingItem.itemname" name="namechange">
+        <input type="text" v-model="editingItem.itemname" id="namechange">
         <label for="costchange">Change {{ comparedItem.itemname }}'s cost:</label>
-        <input type="number" v-model="editingItem.cost" name="costchange">
+        <input type="number" v-model="editingItem.cost" id="costchange">
       </template>
 
       <template v-slot:footer>
@@ -49,9 +49,9 @@
     </button>
     <form v-show="creatingItem">
       <label for="nameinput">Input name:</label>
-      <input type="text" v-model="newItem.name" name="nameinput" required>
+      <input type="text" v-model="newItem.name" id="nameinput" required>
       <label for="costinput">Input cost:</label>
-      <input type="number" v-model="newItem.cost" name="costinput" required>
+      <input type="number" v-model="newItem.cost" id="costinput" required>
       <button
         @click="creatingItem = false"
       >
