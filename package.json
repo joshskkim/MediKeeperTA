@@ -4,6 +4,7 @@
   "description": "Technical Assessment for MediKeeper",
   "main": "index.js",
   "scripts": {
+    "setuppg": "psql -U postgres < database/schema.sql",
     "start": "nodemon server/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
