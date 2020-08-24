@@ -90,6 +90,6 @@ PATCH('/api/items/name', (req) => ItemController.patchItemName(req.body.id, req.
 PATCH('/api/items/cost', (req) => ItemController.patchItemCost(req.body.id, req.body.cost));
 
 // DELETES an item
-DELETE('/api/items', (req) => ItemController.removeItem(req.body.id));
+DELETE('/api/items/:id', (req) => ItemController.removeItem(req.params.id));
 
 module.exports = app;
