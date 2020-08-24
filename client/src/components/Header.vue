@@ -33,6 +33,10 @@ export default {
   table th:hover {
     background: #717699;
   }
+  table th:first-child {
+    padding-right: 0;
+    width: 50px;
+  }
   table th:last-child {
     padding-right: 0;
     width: 125px;

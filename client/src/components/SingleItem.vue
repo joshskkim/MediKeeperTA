@@ -9,11 +9,22 @@
     <td>
       {{ item.itemname }}
     </td>
-    <td class="float-container">
-      <div class="float-child">{{ item.cost }}</div>
-      <div class="float-child" v-show="hover">
-        <button></button>
-        <button @click.prevent="$emit('del-item', item.id)" class="del">X</button>
+    <td>
+      <div class="flex-container">
+        <div class="flex-child cost">{{ item.cost }}</div>
+        <div class="flex-child buttons" v-show="hover">
+          <button
+            class="edit"
+          >
+            Edit
+          </button>
+          <button
+            @click.prevent="$emit('del-item', item.id)"
+            class="del"
+          >
+            X
+          </button>
+        </div>
       </div>
     </td>
   </div>
@@ -41,12 +52,13 @@ export default {
   }
   table td:last-child {
     border-right: none;
+    width: 125px;
   }
-  .float-container {
-    padding: 20px;
+  table td:first-child {
+    width: 50px;
   }
-  .float-child {
-    width: 50%;
-    float: left;
+  .flex-container {
+    display: flex;
+    justify-content: space-between;
   }
 </style>

@@ -77,10 +77,15 @@ export default {
   }
 
   button {
+    cursor: pointer;
+  }
+</style>
+
+<style scoped>
+  button {
     background: #2196F3;
     color: white;
     border: 1px solid grey;
     border-left: none;
-    cursor: pointer;
   }
 </style>
