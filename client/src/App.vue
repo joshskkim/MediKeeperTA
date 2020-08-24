@@ -3,6 +3,13 @@
     <img alt="MediKeeper logo" src="./assets/logo.png">
     <Items v-bind:items='items' />
     <SearchBar @search-name="handleSearch" />
+    <h2 v-show="maxPriceItem.id">
+      The most you've paid for
+      {{ maxPriceItem.itemname }}
+      is
+      {{ maxPriceItem.cost }}
+    </h2>
+    <button v-show="maxPriceItem.id" v-on:click="handleUnfilter">See all items</button>
   </div>
 </template>
 
@@ -22,6 +29,8 @@ export default {
   data() {
     return {
       items: [],
+      allItems: [],
+      maxPriceItem: {},
     };
   },
   created() {
@@ -38,7 +47,13 @@ export default {
         axios.get(`${API_URL}/api/items/${value}`),
       ]);
 
-      console.log(list, max);
+      this.allItems = this.items;
+      this.items = list.data;
+      this.maxPriceItem = max.data;
+    },
+    handleUnfilter() {
+      this.items = this.allItems;
+      this.maxPriceItem = {};
     },
   },
 };
@@ -51,5 +66,13 @@ export default {
 
   img {
     margin-left: 10px;
+  }
+
+  button {
+    background: #2196F3;
+    color: white;
+    border: 1px solid grey;
+    border-left: none;
+    cursor: pointer;
   }
 </style>
