@@ -27,9 +27,14 @@ export default {
 
 <style>
   table {
-    width: 750px;
     border-collapse: collapse;
     border: 3px solid #44475C;
     margin: 10px 10px 0 10px;
+  }
+  table tbody tr:nth-child(2n) td {
+    background: #D4D8F9;
+  }
+  table tr:hover {
+    opacity: 0.5;
   }
 </style>

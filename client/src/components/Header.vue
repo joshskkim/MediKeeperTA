@@ -28,7 +28,7 @@ export default {
     color: #FFF;
     cursor: pointer;
     padding: 8px;
-    min-width: 30px;
+    width: 75px;
   }
   table th:hover {
     background: #717699;
