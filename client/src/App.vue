@@ -10,13 +10,13 @@
 
     <modal ref="editModal">
       <template v-slot:header>
-        <h1>Edit {{ compared.itemname }}</h1>
+        <h1>Edit {{ comparedItem.itemname }}</h1>
       </template>
 
       <template v-slot:body>
-        Change {{ compared.itemname }}'s name:
+        Change {{ comparedItem.itemname }}'s name:
         <input type="text" v-model="editingItem.itemname" name="namechange">
-        Change {{ compared.itemname }}'s cost:
+        Change {{ comparedItem.itemname }}'s cost:
         <input type="number" v-model="editingItem.cost" name="costchange">
       </template>
 
@@ -115,13 +115,13 @@ export default {
       if (namechanged && costchanged) {
         axios.post(`${API_URL}/api/items`, {
           id: this.editingItem.id,
-          name: this.editingItem.name,
+          name: this.editingItem.itemname,
           cost: this.editingItem.cost,
         });
       } else if (namechanged) {
         axios.patch(`${API_URL}/api/items/name`, {
           id: this.editingItem.id,
-          name: this.editingItem.name,
+          name: this.editingItem.itemname,
         });
       } else if (costchanged) {
         axios.patch(`${API_URL}/api/items/cost`, {
