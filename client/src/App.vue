@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <img alt="MediKeeper logo" src="./assets/logo.png">
-    <Items v-bind:items='items' />
     <SearchBar @search-name="handleSearch" />
+    <Items v-bind:items='items' />
     <h2 v-show="maxPriceItem.id">
       The most you've paid for
       {{ maxPriceItem.itemname }}

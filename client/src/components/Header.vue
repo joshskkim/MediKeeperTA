@@ -28,9 +28,13 @@ export default {
     color: #FFF;
     cursor: pointer;
     padding: 8px;
-    width: 75px;
+    width: 90px;
   }
   table th:hover {
     background: #717699;
+  }
+  table th:last-child {
+    padding-right: 0;
+    width: 125px;
   }
 </style>
