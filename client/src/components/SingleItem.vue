@@ -14,7 +14,7 @@
         <div class="flex-child cost">{{ item.cost }}</div>
         <div class="flex-child buttons" v-show="hover">
           <button
-            @click.prevent="$emit('edit-item', item.itemname)"
+            @click.prevent="$emit('edit-item', item)"
             class="edit"
           >
             Edit

@@ -10,16 +10,24 @@
 
     <modal ref="editModal">
       <template v-slot:header>
-        <h1>Edit {{ editingItemName }}</h1>
+        <h1>Edit {{ compared.itemname }}</h1>
       </template>
 
       <template v-slot:body>
+        Change {{ compared.itemname }}'s name:
+        <input type="text" v-model="editingItem.itemname" name="namechange">
+        Change {{ compared.itemname }}'s cost:
+        <input type="number" v-model="editingItem.cost" name="costchange">
       </template>
 
       <template v-slot:footer>
         <div>
           <button @click="$refs.editModal.closeModal()">Cancel</button>
-          <button @click="$refs.editModal.closeModal()">Save</button>
+          <button
+            @click="handlePatch"
+          >
+            Save
+          </button>
         </div>
       </template>
     </modal>
@@ -35,6 +43,8 @@
 </template>
 
 <script>
+/* eslint-disable no-self-compare */
+
 import axios from 'axios';
 import Modal from './components/Modal.vue';
 import Items from './components/Items.vue';
@@ -54,7 +64,8 @@ export default {
       items: [],
       allItems: [],
       maxPriceItem: {},
-      editingItemName: '',
+      editingItem: {},
+      comparedItem: {},
     };
   },
   created() {
@@ -83,9 +94,43 @@ export default {
         this.allItems.splice(index, 1);
       }
     },
-    handleEdit(name) {
+    handleEdit(item) {
       this.$refs.editModal.openModal();
-      this.editingItemName = name;
+      this.editingItem = item;
+      this.comparedItem = item;
+    },
+    handlePatch() {
+      this.$refs.editModal.closeModal();
+      let namechanged = false;
+      let costchanged = false;
+
+      if (this.comparedItem.itemname !== this.editingItem.itemname) {
+        namechanged = true;
+      }
+
+      if (this.comparedItem.cost !== this.comparedItem.cost) {
+        costchanged = true;
+      }
+
+      if (namechanged && costchanged) {
+        axios.post(`${API_URL}/api/items`, {
+          id: this.editingItem.id,
+          name: this.editingItem.name,
+          cost: this.editingItem.cost,
+        });
+      } else if (namechanged) {
+        axios.patch(`${API_URL}/api/items/name`, {
+          id: this.editingItem.id,
+          name: this.editingItem.name,
+        });
+      } else if (costchanged) {
+        axios.patch(`${API_URL}/api/items/cost`, {
+          id: this.editingItem.id,
+          cost: this.editingItem.cost,
+        });
+      } else {
+        console.log(`You did not edit ${this.editingItem.itemname}`);
+      }
     },
     handleUnfilter() {
       this.items = this.allItems;
