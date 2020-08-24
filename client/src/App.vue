@@ -2,7 +2,7 @@
   <div id="app">
     <img alt="MediKeeper logo" src="./assets/logo.png">
     <Items v-bind:items='items' />
-    <SearchBar />
+    <SearchBar @search-name="handleSearch" />
   </div>
 </template>
 
@@ -27,9 +27,19 @@ export default {
   created() {
     axios.get(`${API_URL}/api/items`)
       .then(({ data }) => {
-        this.items = data.data;
+        this.items = data;
       })
       .catch((err) => console.error(err));
+  },
+  methods: {
+    async handleSearch(value) {
+      const [list, max] = await Promise.all([
+        axios.get(`${API_URL}/api/items/list/${value}`),
+        axios.get(`${API_URL}/api/items/${value}`),
+      ]);
+
+      console.log(list, max);
+    },
   },
 };
 </script>
