@@ -28,7 +28,6 @@ export default {
   name: 'EditModal',
   data() {
     return {
-      id: null,
       show: false,
     };
   },
@@ -37,9 +36,8 @@ export default {
       this.show = false;
       document.querySelector('body').classList.remove('overflow-hidden');
     },
-    openModal(value) {
+    openModal() {
       this.show = true;
-      this.id = value;
       document.querySelector('body').classList.add('overflow-hidden');
     },
   },

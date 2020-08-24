@@ -2,11 +2,15 @@
   <div id="app">
     <img alt="MediKeeper logo" src="./assets/logo.png">
     <SearchBar @search-name="handleSearch" />
-    <Items v-bind:items='items' @del-item="handleDelete" @edit-item="$refs.editModal.openModal()" />
+    <Items
+      v-bind:items='items'
+      @del-item="handleDelete"
+      @edit-item="handleEdit"
+    />
 
     <modal ref="editModal">
       <template v-slot:header>
-        <h1>Modal title</h1>
+        <h1>Edit {{ editingItemName }}</h1>
       </template>
 
       <template v-slot:body>
@@ -50,6 +54,7 @@ export default {
       items: [],
       allItems: [],
       maxPriceItem: {},
+      editingItemName: '',
     };
   },
   created() {
@@ -77,6 +82,10 @@ export default {
       if (this.allItems[0]) {
         this.allItems.splice(index, 1);
       }
+    },
+    handleEdit(name) {
+      this.$refs.editModal.openModal();
+      this.editingItemName = name;
     },
     handleUnfilter() {
       this.items = this.allItems;

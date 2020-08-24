@@ -12,7 +12,7 @@
           <SingleItem
             v-bind:item="item"
             v-on:del-item="$emit('del-item', item.id)"
-            v-on:edit-item="$emit('edit-item', item.id)"
+            v-on:edit-item="$emit('edit-item', item.itemname)"
           />
         </tr>
       </tbody>
