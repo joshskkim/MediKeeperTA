@@ -2,12 +2,14 @@
   <div id="app">
     <img alt="MediKeeper logo" src="./assets/logo.png">
     <Items v-bind:items='items' />
+    <SearchBar />
   </div>
 </template>
 
 <script>
 import axios from 'axios';
 import Items from './components/Items.vue';
+import SearchBar from './components/SearchBar.vue';
 
 const API_URL = 'http://localhost:6060';
 
@@ -15,6 +17,7 @@ export default {
   name: 'App',
   components: {
     Items,
+    SearchBar,
   },
   data() {
     return {
