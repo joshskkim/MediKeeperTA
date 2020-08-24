@@ -35,4 +35,8 @@ export default {
   body {
     font-family: 'Open Sans', sans-serif;
   }
+
+  img {
+    margin-left: 10px;
+  }
 </style>
