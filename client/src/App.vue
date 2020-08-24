@@ -14,35 +14,55 @@
       </template>
 
       <template v-slot:body>
-        Change {{ comparedItem.itemname }}'s name:
+        <label for="namechange">Change {{ comparedItem.itemname }}'s name:</label>
         <input type="text" v-model="editingItem.itemname" name="namechange">
-        Change {{ comparedItem.itemname }}'s cost:
+        <label for="costchange">Change {{ comparedItem.itemname }}'s cost:</label>
         <input type="number" v-model="editingItem.cost" name="costchange">
       </template>
 
       <template v-slot:footer>
         <button
           @click="$refs.editModal.closeModal()"
-          class="cancelEdit"
         >
           Cancel
         </button>
         <button
           @click="handlePatch"
-          class="saveEdit"
         >
           Save
         </button>
       </template>
     </modal>
-
     <h2 v-show="maxPriceItem.id">
       The most you've paid for
       {{ maxPriceItem.itemname }}
       is
       {{ maxPriceItem.cost }}
     </h2>
-    <button v-show="maxPriceItem.id" v-on:click="handleUnfilter">See all items</button>
+    <button v-show="maxPriceItem.id" @click="handleUnfilter">See all items</button>
+    <button
+      v-show="!creatingItem"
+      @click="creatingItem = true"
+      id="createButton"
+    >
+      Create A New Item
+    </button>
+    <form v-show="creatingItem">
+      <label for="nameinput">Input name:</label>
+      <input type="text" v-model="newItem.name" name="nameinput" required>
+      <label for="costinput">Input cost:</label>
+      <input type="number" v-model="newItem.cost" name="costinput" required>
+      <button
+        @click="creatingItem = false"
+      >
+        Cancel
+      </button>
+      <button
+        @click="handleAdd"
+      >
+        Save
+      </button>
+    </form>
   </div>
 </template>
 
@@ -70,6 +90,8 @@ export default {
       maxPriceItem: {},
       editingItem: {},
       comparedItem: {},
+      newItem: {},
+      creatingItem: false,
     };
   },
   created() {
@@ -89,6 +111,12 @@ export default {
       this.allItems = this.items;
       this.items = list.data;
       this.maxPriceItem = max.data;
+    },
+    handleAdd() {
+      this.creatingItem = false;
+      this.newItem.id = this.items[this.items.length - 1].id + 1;
+      axios.post(`${API_URL}/api/items`, this.newItem);
+      this.newItem = {};
     },
     handleDelete(value) {
       axios.delete(`${API_URL}/api/items/${value}`);
@@ -160,6 +188,11 @@ export default {
   .overflow-hidden {
     overflow: hidden;
   }
+
+  #createButton {
+    margin: 10px;
+    width: 323px;
+  }
 </style>
 
 <style scoped>
@@ -168,10 +201,6 @@ export default {
     color: white;
     border: 1px solid grey;
     border-left: none;
-  }
-
-  button .cancelEdit {
-    margin-right: 15px;
-    padding-right: 40px;
+    margin-left: 10px;
   }
 </style>
