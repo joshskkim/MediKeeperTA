@@ -40,7 +40,7 @@
       {{ maxPriceItem.cost }}
     </h2>
     <button v-show="maxPriceItem.id" @click="handleUnfilter">See all items</button>
-    <div>
+    <div id="createItem">
       <button
         v-show="!creatingItem"
         @click="creatingItem = true"
