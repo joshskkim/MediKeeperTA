@@ -139,8 +139,6 @@ export default {
       const costchanged = !!(this.editedItem.cost !== undefined);
       const index = this.items.map((item) => item.id).indexOf(this.originalItem.id);
 
-      console.log(namechanged, costchanged);
-
       if (namechanged) {
         this.$set(this.items[index], 'iname', this.editedItem.iname);
         axios.patch(`${API_URL}/api/items/name`, {
