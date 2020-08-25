@@ -113,7 +113,6 @@ export default {
     },
     handleAdd() {
       this.creatingItem = false;
-      this.newItem.id = this.items[this.items.length - 1].id + 1;
       this.items.push(this.newItem);
       axios.post(`${API_URL}/api/items`, this.newItem);
       this.newItem = {};
