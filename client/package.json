@@ -59,6 +59,9 @@
     "not dead"
   ],
   "jest": {
+    "collectCoverage": true,
+    "collectCoverageFrom": ["<rootDir>/src/*.vue"],
+    "coverageReporters": ["text-summary"],
     "preset": "@vue/cli-plugin-unit-jest"
   }
 }
