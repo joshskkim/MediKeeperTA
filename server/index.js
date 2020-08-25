@@ -81,7 +81,7 @@ GET('/api/items/list/:iname', (req) => ItemController.getMaxPrices(req.params.in
 GET('/api/items/:iname', (req) => ItemController.getMaxPrice(req.params.iname));
 
 // CREATES a new item and UPDATES on ID conflict
-POST('/api/items', (req) => ItemController.addItem(req.body.id, req.body.iname, req.body.cost));
+POST('/api/items', (req) => ItemController.addItem(req.body.iname, req.body.cost));
 
 // UPDATES an item name
 PATCH('/api/items/name', (req) => ItemController.patchItemName(req.body.id, req.body.iname));

@@ -18,8 +18,8 @@ const ItemsController = {
   },
 
   // Creates a new item and returns new item
-  async addItem(id, name, cost) {
-    return db.one(sql.add, [id, name, cost]);
+  async addItem(name, cost) {
+    return db.one(sql.add, [name, cost]);
   },
 
   // Patches item name and returns updated item
