@@ -15,14 +15,14 @@
 
       <template v-slot:body>
         <label for="namechange">Change {{ originalItem.iname }}'s name:</label>
-        <input type="text" v-model.lazy="editedItem.iname" id="namechange">
+        <input type="text" v-model="editedItem.iname" id="namechange">
         <label for="costchange">Change {{ originalItem.iname }}'s cost:</label>
         <input type="number" v-model="editedItem.cost" id="costchange">
       </template>
 
       <template v-slot:footer>
         <button
-          @click="$refs.editModal.closeModal()"
+          @click="handleCancel"
         >
           Cancel
         </button>
@@ -118,6 +118,10 @@ export default {
       axios.post(`${API_URL}/api/items`, this.newItem);
       this.newItem = {};
     },
+    handleCancel() {
+      this.$refs.editModal.closeModal();
+      this.editedItem = {};
+    },
     handleDelete(value) {
       axios.delete(`${API_URL}/api/items/${value}`);
       const index = this.items.map((item) => item.id).indexOf(value);
@@ -132,36 +136,29 @@ export default {
     },
     handlePatch() {
       this.$refs.editModal.closeModal();
-      let namechanged = false;
-      let costchanged = false;
+      const namechanged = !!this.editedItem.iname;
+      const costchanged = !!(this.editedItem.cost !== undefined);
+      const index = this.items.map((item) => item.id).indexOf(this.originalItem.id);
 
-      if (this.editedItem.iname.length) {
-        namechanged = true;
-      }
+      console.log(namechanged, costchanged);
 
-      if (this.editedItem.cost) {
-        costchanged = true;
-      }
-
-      if (namechanged && costchanged) {
-        axios.post(`${API_URL}/api/items`, {
-          id: this.originalItem.id,
-          iname: this.editedItem.iname,
-          cost: this.editedItem.cost,
-        });
-      } else if (namechanged) {
+      if (namechanged) {
+        this.$set(this.items[index], 'iname', this.editedItem.iname);
         axios.patch(`${API_URL}/api/items/name`, {
           id: this.originalItem.id,
           iname: this.editedItem.iname,
         });
-      } else if (costchanged) {
+      }
+
+      if (costchanged) {
+        this.$set(this.items[index], 'cost', this.editedItem.cost);
         axios.patch(`${API_URL}/api/items/cost`, {
           id: this.originalItem.id,
           cost: this.editedItem.cost,
         });
-      } else {
-        console.log(`You did not edit ${this.editingItem.iname}`);
       }
+
+      this.editedItem = {};
     },
     handleUnfilter() {
       this.items = this.allItems;
